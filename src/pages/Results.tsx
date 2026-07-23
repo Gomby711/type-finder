@@ -12,6 +12,8 @@ import { useAppState } from "../context/AppContext";
 import { matchFonts } from "../lib/matchFonts";
 import { fontStoreUrl } from "../data/fonts";
 import { CATEGORY_STYLES, CATEGORY_LABELS } from "../lib/categoryStyles";
+import { isDesktopApp } from "../lib/isDesktopApp";
+import { addFontHistoryEntry } from "../lib/fontHistory";
 import type { FontCategory, FontMatch, FontSource } from "../types";
 
 const CATEGORIES: { value: FontCategory; label: string }[] = (
@@ -63,6 +65,18 @@ export default function Results() {
   }, [imageSrc, navigate]);
 
   const allMatches = useMemo(() => matchFonts(sourceBox), [sourceBox]);
+
+  useEffect(() => {
+    if (!isDesktopApp || !imageSrc || !sourceBox || !searchedText) return;
+    addFontHistoryEntry({
+      imageSrc,
+      searchedText,
+      sourceBox,
+      matchCount: allMatches.length,
+    });
+    // Record once per visit to this results page — not on every filter change.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const matches = useMemo(() => {
     return allMatches.filter((f) => {
