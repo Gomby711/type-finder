@@ -43,7 +43,8 @@
       {
         "provider": "github",
         "owner": "Gomby711",
-        "repo": "type-finder"
+        "repo": "type-finder",
+        "releaseType": "release"
       }
     ]
   }
