@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import Home from "./pages/Home";
 import Editor from "./pages/Editor";
 import Results from "./pages/Results";
+import History from "./pages/History";
 import { FONT_CATALOG } from "./data/fonts";
 import { ensureGoogleFontsLoaded } from "./lib/loadGoogleFonts";
 
@@ -30,6 +31,7 @@ export default function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/editor" element={<Editor />} />
                 <Route path="/results" element={<Results />} />
+                <Route path="/history" element={<History />} />
               </Routes>
             </div>
           </div>
