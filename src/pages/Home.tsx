@@ -3,6 +3,7 @@ import { useRef, useState, type ClipboardEvent, type DragEvent } from "react";
 import { ArrowUp, Layers, Sparkles, Type, X, Zap } from "lucide-react";
 import { useAppState } from "../context/AppContext";
 import FloatingLogoBackground from "../components/FloatingLogoBackground";
+import { isDesktopApp } from "../lib/isDesktopApp";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -176,7 +177,9 @@ export default function Home() {
           </div>
           <div>
             <h3 className="text-sm font-bold text-slate-800">
-              Runs right in your browser
+              {isDesktopApp
+                ? "Run right in your desktop app"
+                : "Runs right in your browser"}
             </h3>
             <p className="text-xs text-slate-600 leading-relaxed mt-0.5">
               No round-trip to a server — nothing you upload gets stored.
