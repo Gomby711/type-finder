@@ -155,7 +155,7 @@ export default function Editor() {
 
   return (
     <main className="flex-1 flex flex-col">
-      <div className="flex-1 relative overflow-hidden flex items-center justify-center p-10">
+      <div className="flex-1 relative overflow-hidden flex items-center justify-center p-4 sm:p-10">
         <div
           onMouseDown={handleStageMouseDown}
           style={{
@@ -169,7 +169,7 @@ export default function Editor() {
             src={imageSrc}
             alt="Uploaded"
             draggable={false}
-            className="max-h-[65vh] max-w-[80vw] block rounded shadow-2xl"
+            className="max-h-[55vh] max-w-[92vw] sm:max-h-[65vh] sm:max-w-[80vw] block rounded shadow-2xl"
           />
 
           {dragRect && (
@@ -248,7 +248,7 @@ export default function Editor() {
         )}
       </div>
 
-      <div className="shrink-0 border-t border-white/60 bg-white/70 backdrop-blur-lg px-6 py-4 flex items-center justify-center gap-7 flex-wrap">
+      <div className="shrink-0 border-t border-white/60 bg-white/70 backdrop-blur-lg px-3 py-3 sm:px-6 sm:py-4 flex items-center justify-center gap-3 sm:gap-7 flex-wrap overflow-y-auto max-h-[40vh]">
         <input
           ref={fileInputRef}
           type="file"
@@ -280,14 +280,14 @@ export default function Editor() {
 
         <div className="flex items-center gap-3 text-sm text-neutral-600">
           <RotateCw size={15} className="text-neutral-400" />
-          <span className="w-10 text-right text-neutral-400">-180°</span>
+          <span className="w-8 sm:w-10 text-right text-neutral-400">-180°</span>
           <input
             type="range"
             min={-180}
             max={180}
             value={rotation}
             onChange={(e) => setRotation(Number(e.target.value))}
-            className="w-40 accent-rose-500"
+            className="w-20 sm:w-40 accent-rose-500"
           />
           <span className="w-10 text-neutral-400">+180°</span>
           <input
@@ -307,7 +307,7 @@ export default function Editor() {
 
         <div className="flex items-center gap-3 text-sm text-neutral-600">
           <ZoomIn size={15} className="text-neutral-400" />
-          <span className="w-10 text-right text-neutral-400">50%</span>
+          <span className="w-8 sm:w-10 text-right text-neutral-400">50%</span>
           <input
             type="range"
             min={0.5}
@@ -315,7 +315,7 @@ export default function Editor() {
             step={0.05}
             value={scale}
             onChange={(e) => setScale(Number(e.target.value))}
-            className="w-40 accent-rose-500"
+            className="w-20 sm:w-40 accent-rose-500"
           />
           <span className="w-10 text-neutral-400">200%</span>
           <input

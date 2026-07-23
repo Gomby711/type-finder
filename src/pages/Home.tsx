@@ -68,21 +68,21 @@ export default function Home() {
   }
 
   return (
-    <main className="flex-1 relative px-6 lg:px-12 flex flex-col items-center justify-center overflow-hidden">
+    <main className="flex-1 relative px-4 sm:px-6 lg:px-12 py-4 flex flex-col items-center justify-center overflow-y-auto overflow-x-hidden">
       <FloatingLogoBackground />
 
       <div className="relative z-10 text-center max-w-3xl mx-auto mb-5">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-100 text-rose-700 text-sm font-medium mb-4 shadow-sm border border-rose-200">
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 rounded-full bg-rose-100 text-rose-700 text-xs sm:text-sm font-medium mb-4 shadow-sm border border-rose-200">
           <Sparkles className="w-4 h-4" />
           <span>Font detection for designers</span>
         </div>
-        <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-slate-900 mb-4 leading-[1.1]">
+        <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold tracking-tight text-slate-900 mb-4 leading-[1.1]">
           Identify any font in{" "}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-indigo-500">
             seconds.
           </span>
         </h1>
-        <p className="text-base md:text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">
+        <p className="text-sm sm:text-base md:text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">
           Paste a copied image, drop a saved one, or enter a site or image
           URL. We'll scan it for text — you pick which piece to identify.
         </p>

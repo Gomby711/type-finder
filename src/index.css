@@ -18,6 +18,14 @@ body {
 
 #root {
   min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* Prevent iOS Safari from auto-zooming into inputs (must stay >=16px) */
+input,
+select,
+textarea {
+  font-size: 16px;
 }
 
 /* Home page floating-logo background: each row's strip is duplicated once,

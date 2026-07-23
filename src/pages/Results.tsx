@@ -1,6 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  ChevronLeft,
+  ChevronRight,
+  SlidersHorizontal,
+  X,
+} from "lucide-react";
 import { useAppState } from "../context/AppContext";
 import { matchFonts } from "../lib/matchFonts";
 import { fontStoreUrl } from "../data/fonts";
@@ -49,6 +56,7 @@ export default function Results() {
   const [checkedSources, setCheckedSources] = useState<Set<string>>(new Set());
   const [condensedOnly, setCondensedOnly] = useState(false);
   const [page, setPage] = useState(1);
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
   useEffect(() => {
     if (!imageSrc) navigate("/");
@@ -100,13 +108,8 @@ export default function Results() {
 
   if (!imageSrc) return null;
 
-  return (
-    <main className="flex-1 flex min-h-0">
-      <aside className="w-72 shrink-0 border-r border-white/60 bg-white/60 backdrop-blur-lg p-6 overflow-y-auto">
-        <h2 className="font-semibold text-neutral-900 mb-5">
-          Filters
-        </h2>
-
+  const filtersContent = (
+    <>
         <div className="mb-6">
           <h3 className="font-medium text-xs uppercase tracking-wide text-neutral-500 mb-2.5">
             Source
@@ -169,11 +172,46 @@ export default function Results() {
             Condensed only
           </label>
         </div>
+    </>
+  );
+
+  return (
+    <main className="flex-1 flex flex-col lg:flex-row min-h-0">
+      <aside className="hidden lg:block w-72 shrink-0 border-r border-white/60 bg-white/60 backdrop-blur-lg p-6 overflow-y-auto">
+        <h2 className="font-semibold text-neutral-900 mb-5">Filters</h2>
+        {filtersContent}
       </aside>
 
-      <section className="flex-1 flex flex-col min-w-0">
-        <div className="border-b border-white/60 bg-white/60 backdrop-blur-lg px-6 py-4 flex items-center gap-3 flex-wrap">
-          <h1 className="text-xl font-semibold text-neutral-900">
+      {filtersOpen && (
+        <div className="lg:hidden fixed inset-0 z-30 flex">
+          <div
+            className="absolute inset-0 bg-black/40"
+            onClick={() => setFiltersOpen(false)}
+          />
+          <div className="relative ml-auto h-full w-[85vw] max-w-xs bg-white p-6 overflow-y-auto shadow-2xl">
+            <div className="flex items-center justify-between mb-5">
+              <h2 className="font-semibold text-neutral-900">Filters</h2>
+              <button
+                onClick={() => setFiltersOpen(false)}
+                className="p-1 text-neutral-500 hover:text-neutral-800"
+              >
+                <X size={18} />
+              </button>
+            </div>
+            {filtersContent}
+          </div>
+        </div>
+      )}
+
+      <section className="flex-1 flex flex-col min-w-0 min-h-0">
+        <div className="border-b border-white/60 bg-white/60 backdrop-blur-lg px-4 py-3 sm:px-6 sm:py-4 flex items-center gap-2 sm:gap-3 flex-wrap">
+          <button
+            onClick={() => setFiltersOpen(true)}
+            className="lg:hidden flex items-center gap-1.5 rounded-lg border border-neutral-300 bg-white/80 px-3 py-1.5 text-sm font-medium text-neutral-700 shrink-0"
+          >
+            <SlidersHorizontal size={14} /> Filters
+          </button>
+          <h1 className="text-lg sm:text-xl font-semibold text-neutral-900 min-w-0 truncate">
             Results for{" "}
             <span className="bg-neutral-900 text-white px-2.5 py-0.5 rounded-lg">
               {searchedText || "…"}
@@ -181,21 +219,21 @@ export default function Results() {
           </h1>
           <button
             onClick={() => navigate("/editor")}
-            className="flex items-center gap-1 text-sm font-medium text-rose-700 hover:text-rose-800"
+            className="flex items-center gap-1 text-sm font-medium text-rose-700 hover:text-rose-800 shrink-0"
           >
             <ArrowLeft size={14} /> Back to Image
           </button>
-          <span className="text-sm text-neutral-500">
+          <span className="text-sm text-neutral-500 shrink-0">
             {matches.length} fonts
           </span>
         </div>
 
-        <div className="border-b border-white/60 bg-white/60 backdrop-blur-lg px-6 py-3 flex items-center gap-4 flex-wrap">
+        <div className="border-b border-white/60 bg-white/60 backdrop-blur-lg px-4 py-3 sm:px-6 flex items-center gap-3 sm:gap-4 flex-wrap">
           <input
             value={customText}
             onChange={(e) => setCustomText(e.target.value)}
             placeholder="Type your own text"
-            className="flex-1 min-w-[200px] rounded-lg border border-neutral-200 bg-white/80 px-3 py-1.5 text-sm outline-none focus:border-rose-400"
+            className="flex-1 min-w-[140px] rounded-lg border border-neutral-200 bg-white/80 px-3 py-1.5 text-sm outline-none focus:border-rose-400"
           />
           <select
             value={fontSize}
@@ -216,16 +254,24 @@ export default function Results() {
             return (
               <div
                 key={font.id}
-                className={`px-6 py-6 flex items-start gap-6 ${
+                className={`px-4 py-5 sm:px-6 sm:py-6 flex flex-col sm:flex-row items-start gap-3 sm:gap-6 ${
                   i % 2 === 1 ? "bg-white/40" : "bg-white/70"
                 }`}
               >
-                <div className="w-9 h-9 shrink-0 rounded-xl bg-neutral-900 text-white flex items-center justify-center text-sm font-semibold">
-                  {font.name[0]}
+                <div className="flex items-center gap-3 w-full sm:w-auto sm:contents">
+                  <div className="w-9 h-9 shrink-0 rounded-xl bg-neutral-900 text-white flex items-center justify-center text-sm font-semibold">
+                    {font.name[0]}
+                  </div>
+
+                  <div className="flex-1 min-w-0 sm:hidden">
+                    <span className="font-semibold text-neutral-900">
+                      {font.name}
+                    </span>
+                  </div>
                 </div>
 
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 flex-wrap mb-1.5">
+                <div className="flex-1 min-w-0 w-full">
+                  <div className="hidden sm:flex items-center gap-2 flex-wrap mb-1.5">
                     <span className="font-semibold text-neutral-900">
                       {font.name}
                     </span>
@@ -236,6 +282,17 @@ export default function Results() {
                       {font.condensed ? " · Condensed" : ""}
                     </span>
                     <span className="text-sm text-neutral-400">
+                      By {font.foundry}
+                    </span>
+                  </div>
+                  <div className="flex sm:hidden items-center gap-2 flex-wrap mb-1.5">
+                    <span
+                      className={`text-xs font-medium rounded-full px-2 py-0.5 ${cat.bg} ${cat.text}`}
+                    >
+                      {CATEGORY_LABELS[font.category]}
+                      {font.condensed ? " · Condensed" : ""}
+                    </span>
+                    <span className="text-xs text-neutral-400">
                       By {font.foundry}
                     </span>
                   </div>
@@ -253,7 +310,7 @@ export default function Results() {
                   )}
                 </div>
 
-                <div className="shrink-0 flex flex-col items-end gap-2">
+                <div className="shrink-0 flex flex-row sm:flex-col items-center sm:items-end justify-between gap-2 w-full sm:w-auto">
                   <span className="text-sm text-neutral-500">
                     {font.source === "google" ? "Free" : "Adobe Fonts"}
                   </span>
