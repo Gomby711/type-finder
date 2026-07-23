@@ -1,7 +1,7 @@
 {
   "name": "typefinder-desktop",
   "private": true,
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "TypeFinder desktop app — wraps tf.evtlee.com with Windows auto-update.",
   "main": "main.js",
   "scripts": {
@@ -49,5 +49,6 @@
     ]
   }
 }
+
 
 
