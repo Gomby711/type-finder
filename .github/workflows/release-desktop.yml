@@ -1,0 +1,60 @@
+name: Release Desktop App
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    if: "!contains(github.event.head_commit.message, '[skip release]')"
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Configure git identity
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Bump patch version (site + desktop app)
+        id: bump
+        shell: pwsh
+        run: |
+          $root = Get-Content package.json -Raw | ConvertFrom-Json
+          $parts = $root.version -split '\.'
+          $parts[2] = [int]$parts[2] + 1
+          $newVersion = $parts -join '.'
+
+          (Get-Content package.json -Raw) -replace '"version":\s*"[^"]+"', "`"version`": `"$newVersion`"" |
+            Set-Content package.json
+
+          (Get-Content desktop/package.json -Raw) -replace '"version":\s*"[^"]+"', "`"version`": `"$newVersion`"" |
+            Set-Content desktop/package.json
+
+          echo "version=$newVersion" >> $env:GITHUB_OUTPUT
+
+      - name: Commit version bump
+        run: |
+          git add package.json desktop/package.json
+          git commit -m "chore: release v${{ steps.bump.outputs.version }} [skip release]"
+          git push origin HEAD:main
+
+      - name: Install desktop app dependencies
+        working-directory: desktop
+        run: npm install
+
+      - name: Build and publish Windows installer
+        working-directory: desktop
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx electron-builder --win --publish always
