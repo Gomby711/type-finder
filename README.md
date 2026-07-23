@@ -30,3 +30,9 @@ If you are developing a production application, we recommend enabling type-aware
 ```
 
 See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+
+## Desktop app
+
+`desktop/` contains a Windows Electron wrapper that loads tf.evtlee.com directly, so it always behaves exactly like the website. It ships with in-app auto-updates via `electron-updater` against this repo's GitHub Releases.
+
+Every push to `main` triggers `.github/workflows/release-desktop.yml`, which bumps the patch version in `package.json` and `desktop/package.json`, then builds and publishes a new Windows installer (`TypeFinder-Setup.exe`) as a GitHub Release. The site's "Download App" button always points at `releases/latest/download/TypeFinder-Setup.exe`, so it always serves the current version. Running installs check for and offer that same release through an in-app "Update now" banner.

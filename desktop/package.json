@@ -1,0 +1,50 @@
+{
+  "name": "typefinder-desktop",
+  "private": true,
+  "version": "1.0.0",
+  "description": "TypeFinder desktop app — wraps tf.evtlee.com with Windows auto-update.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win",
+    "publish": "electron-builder --win --publish always"
+  },
+  "dependencies": {
+    "electron-updater": "^6.3.9"
+  },
+  "devDependencies": {
+    "electron": "^33.2.1",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.evtlee.typefinder",
+    "productName": "TypeFinder",
+    "artifactName": "TypeFinder-Setup.exe",
+    "files": [
+      "main.js",
+      "preload.js"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "Gomby711",
+        "repo": "type-finder"
+      }
+    ]
+  }
+}
