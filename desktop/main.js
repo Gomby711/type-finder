@@ -15,12 +15,20 @@ function createWindow() {
     autoHideMenuBar: true,
     backgroundColor: "#fdf1f8",
     icon: path.join(__dirname, "build", "icon.png"),
+    show: false,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
       contextIsolation: true,
       nodeIntegration: false,
       sandbox: true,
     },
+  });
+
+  // Launch maximized so the image view fills the screen like it does in a
+  // maximized browser tab on the site, instead of a small fixed 1360x900 window.
+  mainWindow.once("ready-to-show", () => {
+    mainWindow.maximize();
+    mainWindow.show();
   });
 
   mainWindow.loadURL(SITE_URL);
