@@ -1,7 +1,7 @@
 {
   "name": "type-finder",
   "private": true,
-  "version": "1.0.1",
+  "version": "1.0.2",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -30,4 +30,5 @@
     "vite": "^8.1.1"
   }
 }
+
 
