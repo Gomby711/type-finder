@@ -18,7 +18,7 @@ export default function App() {
   return (
     <AppProvider>
       <BrowserRouter>
-        <div className="relative h-screen overflow-hidden flex flex-col bg-gradient-to-br from-rose-100 via-fuchsia-50 to-teal-100 text-slate-800">
+        <div className="relative h-[100dvh] overflow-hidden flex flex-col bg-gradient-to-br from-rose-100 via-fuchsia-50 to-teal-100 text-slate-800">
           <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 pointer-events-none mix-blend-overlay" />
           <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-rose-200/40 blur-3xl pointer-events-none" />
           <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-indigo-200/40 blur-3xl pointer-events-none" />
